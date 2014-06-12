@@ -2,7 +2,7 @@
 superclase personas
  */
 
-package proyectoagenda;
+package proyectoAgenda;
 
 /**
  *

@@ -1,7 +1,7 @@
 /*
 Clase Usuarios
 */
-package proyectoagenda;
+package proyectoAgenda;
 
 /**
  *

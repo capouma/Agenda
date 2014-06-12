@@ -2,7 +2,7 @@
 Clase para base de datos
 */
 
-package proyectoagenda;
+package proyectoAgenda;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

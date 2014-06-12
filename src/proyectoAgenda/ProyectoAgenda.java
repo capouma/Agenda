@@ -3,13 +3,13 @@
  * podra insertar sus contactos.
  */
 
-package agenda;
+package proyectoAgenda;
 
 /**
  *
  * @author findag
  */
-public class Agenda {
+public class ProyectoAgenda {
 
     /**
      * @param args the command line arguments

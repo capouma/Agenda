@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package agenda;
+package proyectoAgenda;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;

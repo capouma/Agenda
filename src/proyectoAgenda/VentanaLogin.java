@@ -3,7 +3,7 @@
  * tambien tendremos la opcion de crear un nueco usuario.
  */
 
-package agenda;
+package proyectoAgenda;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -121,12 +121,12 @@ public class VentanaLogin extends JFrame implements ActionListener
         else if(ev.getSource() == bAceptar)
         {
             opcion = 2;
-            //VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+            VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
         }
         else if(ev.getSource() == bCrear)
         {
             opcion = 1;
-            //VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+            VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
         }
     }
     /**
