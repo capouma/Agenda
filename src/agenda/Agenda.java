@@ -16,7 +16,9 @@ public class Agenda {
      */
     public static void main(String[] args)
     {
-        
+        //Instanciamos un objeto de tipo ventanaLogin.
+        VentanaLogin ventanaInicio = new VentanaLogin();
+        ventanaInicio.setVentanaInicial(ventanaInicio);
     }
     
 }
