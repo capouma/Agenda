@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * En esta clase tendremos los metodos de ventana sin ser la de login, tendremos los metodos necesarios
+ * para crear, modificar o borrar un contacto, mostrar nuestra agenda y salir.
  */
 
 package proyectoAgenda;
@@ -16,7 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -32,10 +30,9 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Declaramos los objetos que usaremos de forma comun en esta clase
     */
     Container contenedor = getContentPane();
-    JPanel panel1 = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel panel3 = new JPanel();
-    JPanel panel4 = new JPanel();
+    JPanel pCrearContacto = new JPanel();
+    JPanel pModificarContacto = new JPanel();
+    JPanel pAgenda = new JPanel();
     
     DefaultTableModel modelo;
     JTable tabla;
@@ -76,7 +73,10 @@ public class VentanaDatos extends  JDialog implements ActionListener
     
     
     
-    
+    /*
+    * Constructor que recibe un objeto de tipo VentanaLogin y un boolean el cual nos dira si esta clase es hija o no de
+    * VentanaLogin. Tambien recibira un integer que nos dira si vamos a crear un usuario o a iniciar nuestra agenda.
+    */
     public VentanaDatos(VentanaLogin ventanaInicial, Boolean modal, int opcion)
     {
         
@@ -94,6 +94,9 @@ public class VentanaDatos extends  JDialog implements ActionListener
 
     }
     
+    /*
+    * Metodo en el cual pedira los datos necesarios para crear un nuevo usuario y añadirlo a nuestra BD
+    */
     public void vcrearUsuario()
     {
         contenedor.setLayout(null);
@@ -179,9 +182,10 @@ public class VentanaDatos extends  JDialog implements ActionListener
         contenedor.add(tFTelefono);
         contenedor.add(tFEMail);
         contenedor.add(lEMail);
-
-        //array donde se recogen los datos
         
+        /*
+        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+        */
         setSize(460, 300);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -189,9 +193,12 @@ public class VentanaDatos extends  JDialog implements ActionListener
 
     }
     
+    /*
+    *   Metodo en el cual pedira los datos necesarios para crear un nuevo contacto y añadirlo a la agenda del usuario
+    */
     public void vCrearContacto()
     {
-        panel1.setLayout(null);
+        pCrearContacto.setLayout(null);
         
         JLabel lMensaje = new JLabel();
         lMensaje.setText("El nombre y el telefono son obligatorios");
@@ -242,41 +249,48 @@ public class VentanaDatos extends  JDialog implements ActionListener
         bCancelar.setBounds(300, 200, 100, 20);
         bCancelar.addActionListener(this);
     
-        panel1.add(bAceptar);
-        panel1.add(bCancelar);
-        panel1.add(lMensaje);
-        panel1.add(lNombre);
-        panel1.add(tFNombre);
-        panel1.add(lApellidos);
-        panel1.add(tFApellidos);
-        panel1.add(lDireccion);
-        panel1.add(tFDireccion);
-        panel1.add(lPoblacion);
-        panel1.add(tFPoblacion);
-        panel1.add(lProvincia);
-        panel1.add(tFProvincia);
-        panel1.add(lNacionalidad);
-        panel1.add(tFNacionalidad);
-        panel1.add(lTelefono);
-        panel1.add(tFTelefono);
-        panel1.add(tFEMail);
-        panel1.add(lEMail);
-        panel1.setVisible(true);
+        pCrearContacto.add(bAceptar);
+        pCrearContacto.add(bCancelar);
+        pCrearContacto.add(lMensaje);
+        pCrearContacto.add(lNombre);
+        pCrearContacto.add(tFNombre);
+        pCrearContacto.add(lApellidos);
+        pCrearContacto.add(tFApellidos);
+        pCrearContacto.add(lDireccion);
+        pCrearContacto.add(tFDireccion);
+        pCrearContacto.add(lPoblacion);
+        pCrearContacto.add(tFPoblacion);
+        pCrearContacto.add(lProvincia);
+        pCrearContacto.add(tFProvincia);
+        pCrearContacto.add(lNacionalidad);
+        pCrearContacto.add(tFNacionalidad);
+        pCrearContacto.add(lTelefono);
+        pCrearContacto.add(tFTelefono);
+        pCrearContacto.add(tFEMail);
+        pCrearContacto.add(lEMail);
+        pCrearContacto.setVisible(true);
         
-        add(panel1);
+        add(pCrearContacto);
+        
+        /*
+        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+        */
         setSize(460, 300);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
     
     }
-    
-    public void vModificarContacto()
+    /*
+    * Metodo que nos pedira un nombre de un contacto, cuando busquemos mostrara la ventana agenda
+    * y colocara en la tabla los contactos que tengan el nombre buscado.
+    */
+    public void vModBorrarContacto(int modBo)
     {
-        panel2.setLayout(null);
+        pModificarContacto.setLayout(null);
         
         JLabel lMensaje = new JLabel();
-        lMensaje.setText("Que contacto quieres modificar?");
+        lMensaje.setText("Seleccione un contacto");
         lMensaje.setBounds(130, 30, 300, 20);
         
         lNombre = new JLabel("Nombre");
@@ -288,53 +302,26 @@ public class VentanaDatos extends  JDialog implements ActionListener
         bAceptar.setBounds(250, 80, 80, 20);
         bAceptar.addActionListener(this);
         
-        panel2.add(bAceptar);
-        panel2.add(lMensaje);
-        panel2.add(lNombre);
-        panel2.add(tFNombre);
+        pModificarContacto.add(bAceptar);
+        pModificarContacto.add(lMensaje);
+        pModificarContacto.add(lNombre);
+        pModificarContacto.add(tFNombre);
         
-        panel2.setVisible(true);
-        add(panel2);
+        pModificarContacto.setVisible(true);
+        add(pModificarContacto);
         setSize(460, 200);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
         
     }
-    
-    public void borrar()
-    {
-        panel4.setLayout(null);
-        JLabel lMensaje = new JLabel();
-        lMensaje.setText("Que contacto quieres borrar?");
-        lMensaje.setBounds(130, 30, 300, 20);
-        
-        lNombre = new JLabel("Nombre");
-        lNombre.setBounds(90, 80, 50, 20);
-        tFNombre = new JTextField();
-        tFNombre.setBounds(140, 80, 100, 20);
-        
-        bAceptar = new JButton("Buscar");
-        bAceptar.setBounds(250, 80, 80, 20);
-        bAceptar.addActionListener(this);
-        
-        panel4.add(lMensaje);
-        panel4.add(lNombre);
-        panel4.add(tFNombre);
-        panel4.add(bAceptar);
-        add(panel4);
-        panel4.setVisible(true);
-        add(panel4);
-        setSize(460, 200);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        
-    }
-    
+    /*
+    * Ventana que se mostrara cuando en ventana login insertemos un usuario y contraseña correcta,
+    * en ella veremos una tabla con los contactos del usuario y nos dara opcion a modificar,crear o borrar dichos contactos.
+    */
     public void agenda()
     {
-        panel3.setLayout(null);
+        pAgenda.setLayout(null);
         setTitle("Agenda");
         JMenuBar mBarra = new JMenuBar();
         
@@ -359,9 +346,9 @@ public class VentanaDatos extends  JDialog implements ActionListener
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 80, 700, 300);
         
-        panel3.add(scroll);
-        panel3.setVisible(true);
-        add(panel3);
+        pAgenda.add(scroll);
+        pAgenda.setVisible(true);
+        add(pAgenda);
         
         setSize(800, 600);
         setResizable(false);
@@ -374,6 +361,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     public void actionPerformed(ActionEvent ev)
     {
         String auxOpcion = ev.getActionCommand();
+        int modBo;
         Agenda agenda = new Agenda();
         
         switch(auxOpcion)
@@ -383,28 +371,27 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 break;
                 
             case "Crear Contacto":
-                panel4.setVisible(false);
-                panel3.setVisible(false);
-                panel2.setVisible(false);
+                pAgenda.setVisible(false);
+                pModificarContacto.setVisible(false);
                 vCrearContacto();                    
                 break;
                 
             case "Modificar Contacto":
-                panel4.setVisible(false);
-                panel3.setVisible(false);
-                panel1.setVisible(false);
-                vModificarContacto();
+                pAgenda.setVisible(false);
+                pCrearContacto.setVisible(false);
+                modBo = 1;
+                vModBorrarContacto(modBo);
                 break;
             case "Borrar Contacto":
-                panel3.setVisible(false);
-                panel2.setVisible(false);
-                panel1.setVisible(false);
-                borrar();
+                pAgenda.setVisible(false);
+                pModificarContacto.setVisible(false);
+                pCrearContacto.setVisible(false);
+                modBo = 2;
+                vModBorrarContacto(modBo);
                 break;
             case "Buscar": 
-                panel4.setVisible(false);
-                panel2.setVisible(false);
-                panel1.setVisible(false);
+                pModificarContacto.setVisible(false);
+                pCrearContacto.setVisible(false);
                 agenda();
                 break;
             case "Aceptar":
