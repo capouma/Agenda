@@ -152,7 +152,7 @@ public class Agenda
         String campos[]={"nomusuario","claveusuario"};//array de campos usuario DATOS FIJOS!!!
         String valores[]={u.getNomUsuario(),u.getClaveUsuario()};//valores para los campos
         
-       // this.bd.consulta("insert", "usuarios", campos, valores, null, null);//realizamos la consulta y guardamos los datos en su tabla correspondiente
+        this.bd.consulta("insert", "usuarios", campos, valores, null, null);//realizamos la consulta y guardamos los datos en su tabla correspondiente
         
         //guardamos el resto de datos en su tabla correspondiente
         //primero obtendremos su id
