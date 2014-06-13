@@ -74,6 +74,9 @@ public class VentanaDatos extends  JDialog implements ActionListener
     JLabel lEMail;
     JTextField tFEMail;
     
+    
+    
+    
     public VentanaDatos(VentanaLogin ventanaInicial, Boolean modal, int opcion)
     {
         
@@ -148,6 +151,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     
         bAceptar = new JButton("Aceptar");
         bAceptar.setBounds(50, 200, 100, 20);
+        bAceptar.addActionListener(this);
     
         bCancelar = new JButton("Cancelar");
         bCancelar.setBounds(300, 200, 100, 20);
@@ -175,6 +179,8 @@ public class VentanaDatos extends  JDialog implements ActionListener
         contenedor.add(tFTelefono);
         contenedor.add(tFEMail);
         contenedor.add(lEMail);
+
+        //array donde se recogen los datos
         
         setSize(460, 300);
         setResizable(false);
@@ -368,6 +374,8 @@ public class VentanaDatos extends  JDialog implements ActionListener
     public void actionPerformed(ActionEvent ev)
     {
         String auxOpcion = ev.getActionCommand();
+        Agenda agenda = new Agenda();
+        
         switch(auxOpcion)
         {
             case "Cancelar":
@@ -398,6 +406,39 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 panel2.setVisible(false);
                 panel1.setVisible(false);
                 agenda();
+                break;
+            case "Aceptar":
+                
+                Personas contacto= new Usuarios
+                    (   tFUsuario.getText(),
+                        tFContraseña.getText(),
+                        tFNombre.getText(),
+                        tFApellidos.getText(),
+                        tFDireccion.getText(),
+                        tFPoblacion.getText(),
+                        tFProvincia.getText(),
+                        tFNacionalidad.getText(),
+                        tFEMail.getText(),
+                        Integer.parseInt(tFTelefono.getText())
+                    );
+                
+                
+                String campos[]=
+                {
+                    "usuario",
+                    "clave",
+                    "nombre",
+                    "apellidos",
+                    "direccion",
+                    "poblacion",
+                    "provincia",
+                    "nacionalidad",
+                    "telefono",
+                    "email"
+                };
+                
+                agenda.crearUsuario((Usuarios)contacto);
+                
                 break;
         }
     }
