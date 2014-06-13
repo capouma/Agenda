@@ -141,7 +141,63 @@ public class Agenda
             return true;
         }catch(Exception ex)
         {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public boolean crearUsuario(Usuarios u)
+    {
+        //guardamos el usuario y la contraseña en la tabla usuarios
+        String campos[]={"nomusuario","claveusuario"};//array de campos usuario DATOS FIJOS!!!
+        String valores[]={u.getNomUsuario(),u.getClaveUsuario()};//valores para los campos
+        
+       // this.bd.consulta("insert", "usuarios", campos, valores, null, null);//realizamos la consulta y guardamos los datos en su tabla correspondiente
+        
+        //guardamos el resto de datos en su tabla correspondiente
+        //primero obtendremos su id
+        String camposSelect[]={"id"};
+        
+        //este array es de relleno, sólo se necesita para que no envíe un null y de error
+        //por tanto, su longitud y número de elementos no es importante
+        
+        String cSelect[]=
+            {
+                u.getNombre(),
+                u.getApellidos(),
+                u.getDireccion(),
+                u.getPoblacion(),
+                u.getProvincia(),
+                u.getNacionalidad(),
+                u.getTelefono().toString(),
+                u.getEmail()
+            };
+        
+        
+            String condicional=" where `nomUsuario`='"+u.getNomUsuario()+"' and `claveusuario`="+u.getClaveUsuario();//condicional FIJO
+           
+            ResultSet rs=bd.consulta("select", "usuarios", camposSelect, cSelect, condicional, null);//obtenemos el id del usuario a eliminar
+       
+       try           
+        {
+                rs.first();//nos ponemos en la primera posicion del resultset
+                
+                String f[]={"idcontacto"};
+                String v[]={rs.getString(1)};//la configuración de la tabla no nos deja
+                                             //repetir campos, por lo tanto, siempre va a devolver 1 valor
+                
+                System.out.println("id usuario: "+v[0]);
+                
+                
+                
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+          
+        
+        
+        return true;
     }
 }
