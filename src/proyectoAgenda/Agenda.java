@@ -152,7 +152,7 @@ public class Agenda
         String campos[]={"nomusuario","claveusuario"};//array de campos usuario DATOS FIJOS!!!
         String valores[]={u.getNomUsuario(),u.getClaveUsuario()};//valores para los campos
         
-       // this.bd.consulta("insert", "usuarios", campos, valores, null, null);//realizamos la consulta y guardamos los datos en su tabla correspondiente
+        this.bd.consulta("insert", "usuarios", campos, valores, null, null);//realizamos la consulta y guardamos los datos en su tabla correspondiente
         
         //guardamos el resto de datos en su tabla correspondiente
         //primero obtendremos su id
@@ -174,7 +174,7 @@ public class Agenda
             };
         
         
-            String condicional=" where `nomUsuario`='"+u.getNomUsuario()+"' and `claveusuario`="+u.getClaveUsuario();//condicional FIJO
+            String condicional=" where `nomUsuario`='"+u.getNomUsuario()+"' and `claveusuario`='"+u.getClaveUsuario()+"'";//condicional FIJO
            
             ResultSet rs=bd.consulta("select", "usuarios", camposSelect, cSelect, condicional, null);//obtenemos el id del usuario a eliminar
        
@@ -182,12 +182,35 @@ public class Agenda
         {
                 rs.first();//nos ponemos en la primera posicion del resultset
                 
-                String f[]={"idcontacto"};
-                String v[]={rs.getString(1)};//la configuración de la tabla no nos deja
-                                             //repetir campos, por lo tanto, siempre va a devolver 1 valor
+                String f[]={
+                    "idusuario",
+                    "nombre",
+                    "apellidos",
+                    "direccion",
+                    "poblacion",
+                    "provincia",
+                    "nacionalidad",
+                    "telefono",
+                    "email"
+                };//la configuración de la tabla no nos deja
+                                          //repetir campos, por lo tanto, siempre va a devolver 1 valor
+                String v[]=
+                {
+                    rs.getString(1),
+                    u.getNombre(),
+                    u.getApellidos(),
+                    u.getDireccion(),
+                    u.getPoblacion(),
+                    u.getProvincia(),
+                    u.getNacionalidad(),
+                    u.getTelefono().toString(),
+                    u.getEmail()
+                };
+                                             
                 
                 System.out.println("id usuario: "+v[0]);
                 
+                bd.consulta("insert", "datosusuario", f, v, null , null);
                 
                 
         } catch (SQLException ex)
