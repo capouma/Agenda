@@ -422,21 +422,6 @@ public class VentanaDatos extends  JDialog implements ActionListener
                         Integer.parseInt(tFTelefono.getText())
                     );
                 
-                
-                String campos[]=
-                {
-                    "usuario",
-                    "clave",
-                    "nombre",
-                    "apellidos",
-                    "direccion",
-                    "poblacion",
-                    "provincia",
-                    "nacionalidad",
-                    "telefono",
-                    "email"
-                };
-                
                 agenda.crearUsuario((Usuarios)contacto);
                 
                 break;
