@@ -8,6 +8,10 @@ package proyectoAgenda;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -34,6 +38,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     JPanel pModificarContacto = new JPanel();
     JPanel pAgenda = new JPanel();
     
+    int modBo;
     DefaultTableModel modelo;
     JTable tabla;
     String[] cabecera = {"idusuario", "nombre", "apellidos", "direccion", "poblacion", "provincia", "nacionalidad", "telefono", "email"};
@@ -285,7 +290,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Metodo que nos pedira un nombre de un contacto, cuando busquemos mostrara la ventana agenda
     * y colocara en la tabla los contactos que tengan el nombre buscado.
     */
-    public void vModBorrarContacto(int modBo)
+    public void vModBorrarContacto()
     {
         pModificarContacto.setLayout(null);
         
@@ -314,6 +319,100 @@ public class VentanaDatos extends  JDialog implements ActionListener
         setLocationRelativeTo(null);
         setVisible(true);
         
+    }
+    /*
+    * Metodo que usaremos para modificar o borrar contactos que recibiremos de la tabla agenda.
+    * Este metodo recibira dichos datos en un objeto de tipo ResultSet.
+    */
+    public void vModBoContacto(ResultSet rs)
+    {
+        try {
+            pCrearContacto.setLayout(null);
+            
+            JLabel lMensaje = new JLabel();
+            lMensaje.setText("El nombre y el telefono son obligatorios");
+            lMensaje.setBounds(110, 20, 300, 20);
+            lNombre = new JLabel("Nombre");
+            lNombre.setBounds(30, 60, 50, 20);
+            tFNombre = new JTextField(rs.getString("nombre"));
+            tFNombre.setBounds(80, 60, 100, 20);
+            lApellidos = new JLabel("Apellidos");
+            lApellidos.setBounds(200, 60, 80, 20);
+            tFApellidos = new JTextField(rs.getString("apellidos"));
+            tFApellidos.setBounds(255, 60, 150, 20);
+            
+            lDireccion = new JLabel("Direccion");
+            lDireccion.setBounds(30, 90, 80, 20);
+            tFDireccion = new JTextField(rs.getString("direccion"));
+            tFDireccion.setBounds(90, 90, 150, 20);
+            
+            lPoblacion = new JLabel("Poblacion");
+            lPoblacion.setBounds(260, 90, 100, 20);
+            tFPoblacion = new JTextField(rs.getString("poblacion"));
+            tFPoblacion.setBounds(320, 90, 100, 20);
+            
+            lProvincia = new JLabel("Provincia");
+            lProvincia.setBounds(30, 120, 100, 20);
+            tFProvincia = new JTextField(rs.getString("nombre"));
+            tFProvincia.setBounds(90, 120, 150, 20);
+            
+            lNacionalidad = new JLabel("Nacionalidad");
+            lNacionalidad.setBounds(260, 120, 100, 20);
+            tFNacionalidad = new JTextField(rs.getString("nacionalidad"));
+            tFNacionalidad.setBounds(335, 120, 100, 20);
+            
+            lEMail = new JLabel("E-mail");
+            lEMail.setBounds(30, 150, 80, 20);
+            tFEMail = new JTextField(rs.getString("email"));
+            tFEMail.setBounds(75, 150, 150, 20);
+            
+            lTelefono = new JLabel("Telefono");
+            lTelefono.setBounds(260, 150, 100, 20);
+            tFTelefono = new JTextField(rs.getString("telefono"));
+            tFTelefono.setBounds(315, 150, 100, 20);
+            
+            bAceptar = new JButton("Aceptar");
+            bAceptar.setBounds(50, 200, 100, 20);
+            bAceptar.addActionListener(this);
+            
+            bCancelar = new JButton("Cancelar");
+            bCancelar.setBounds(300, 200, 100, 20);
+            bCancelar.addActionListener(this);
+            
+            pCrearContacto.add(bAceptar);
+            pCrearContacto.add(bCancelar);
+            pCrearContacto.add(lMensaje);
+            pCrearContacto.add(lNombre);
+            pCrearContacto.add(tFNombre);
+            pCrearContacto.add(lApellidos);
+            pCrearContacto.add(tFApellidos);
+            pCrearContacto.add(lDireccion);
+            pCrearContacto.add(tFDireccion);
+            pCrearContacto.add(lPoblacion);
+            pCrearContacto.add(tFPoblacion);
+            pCrearContacto.add(lProvincia);
+            pCrearContacto.add(tFProvincia);
+            pCrearContacto.add(lNacionalidad);
+            pCrearContacto.add(tFNacionalidad);
+            pCrearContacto.add(lTelefono);
+            pCrearContacto.add(tFTelefono);
+            pCrearContacto.add(tFEMail);
+            pCrearContacto.add(lEMail);
+            pCrearContacto.setVisible(true);
+            
+            add(pCrearContacto);
+            
+            /*
+            * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+            */
+            setSize(460, 300);
+            setResizable(false);
+            setLocationRelativeTo(null);
+            setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
     /*
     * Ventana que se mostrara cuando en ventana login insertemos un usuario y contraseña correcta,
@@ -361,7 +460,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     public void actionPerformed(ActionEvent ev)
     {
         String auxOpcion = ev.getActionCommand();
-        int modBo;
+
         Agenda agenda = new Agenda();
         
         switch(auxOpcion)
@@ -380,14 +479,14 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 pAgenda.setVisible(false);
                 pCrearContacto.setVisible(false);
                 modBo = 1;
-                vModBorrarContacto(modBo);
+                vModBorrarContacto();
                 break;
             case "Borrar Contacto":
                 pAgenda.setVisible(false);
                 pModificarContacto.setVisible(false);
                 pCrearContacto.setVisible(false);
                 modBo = 2;
-                vModBorrarContacto(modBo);
+                vModBorrarContacto();
                 break;
             case "Buscar": 
                 pModificarContacto.setVisible(false);
