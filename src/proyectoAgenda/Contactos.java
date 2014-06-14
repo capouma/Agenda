@@ -12,13 +12,16 @@ package proyectoAgenda;
  */
 public class Contactos extends Personas
 {
+    String idUsuario;
+    
     public Contactos()
     {
         super();
     }
     
-    public Contactos(String nombre,String apellidos,String direccion,String poblacion,String provincia,String nacionalidad,String email,Integer telefono)
+    public Contactos(String idUsuario,String nombre,String apellidos,String direccion,String poblacion,String provincia,String nacionalidad,String email,Integer telefono)
     {
+        this.idUsuario=idUsuario;
         super.setNombre(nombre);
         super.setApellidos(apellidos);
         super.setDireccion(direccion);
