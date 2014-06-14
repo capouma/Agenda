@@ -82,7 +82,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Constructor que recibe un objeto de tipo VentanaLogin y un boolean el cual nos dira si esta clase es hija o no de
     * VentanaLogin. Tambien recibira un integer que nos dira si vamos a crear un usuario o a iniciar nuestra agenda.
     */
-    public VentanaDatos(VentanaLogin ventanaInicial, Boolean modal, int opcion)
+    public VentanaDatos(VentanaLogin ventanaInicial, Boolean modal, int opcion,String id)
     {
         
         super(ventanaInicial, modal);
@@ -93,7 +93,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 vcrearUsuario();
                 break;
             case 2:
-                agenda();
+                agenda(id);
                 break;
         }
 
@@ -418,8 +418,10 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Ventana que se mostrara cuando en ventana login insertemos un usuario y contraseña correcta,
     * en ella veremos una tabla con los contactos del usuario y nos dara opcion a modificar,crear o borrar dichos contactos.
     */
-    public void agenda()
+    public void agenda(String id)
     {
+        String idUsuario=id;
+        
         pAgenda.setLayout(null);
         setTitle("Agenda");
         JMenuBar mBarra = new JMenuBar();
@@ -491,7 +493,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
             case "Buscar": 
                 pModificarContacto.setVisible(false);
                 pCrearContacto.setVisible(false);
-                agenda();
+                agenda(null);
                 break;
             case "Aceptar":
                 
