@@ -6,6 +6,7 @@
 package proyectoAgenda;
 
 import java.awt.Container;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -76,7 +77,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     JLabel lEMail;
     JTextField tFEMail;
     
-    
+    String idUsuario;
     
     /*
     * Constructor que recibe un objeto de tipo VentanaLogin y un boolean el cual nos dira si esta clase es hija o no de
@@ -93,7 +94,8 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 vcrearUsuario();
                 break;
             case 2:
-                agenda(id);
+                this.idUsuario=id;
+                agenda();
                 break;
         }
 
@@ -249,6 +251,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     
         bAceptar = new JButton("Aceptar");
         bAceptar.setBounds(50, 200, 100, 20);
+        bAceptar.addActionListener(this);
     
         bCancelar = new JButton("Cancelar");
         bCancelar.setBounds(300, 200, 100, 20);
@@ -280,7 +283,12 @@ public class VentanaDatos extends  JDialog implements ActionListener
         /*
         * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
         */
-        setSize(460, 300);
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        
+        int w=(tk.getScreenSize().width)/8;
+        int h=(tk.getScreenSize().height)/4;
+        
+        setSize(400,300);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -418,10 +426,9 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Ventana que se mostrara cuando en ventana login insertemos un usuario y contraseña correcta,
     * en ella veremos una tabla con los contactos del usuario y nos dara opcion a modificar,crear o borrar dichos contactos.
     */
-    public void agenda(String id)
+    public void agenda()
     {
-        String idUsuario=id;
-        
+      
         pAgenda.setLayout(null);
         setTitle("Agenda");
         JMenuBar mBarra = new JMenuBar();
@@ -493,25 +500,41 @@ public class VentanaDatos extends  JDialog implements ActionListener
             case "Buscar": 
                 pModificarContacto.setVisible(false);
                 pCrearContacto.setVisible(false);
-                agenda(null);
+                agenda();
                 break;
             case "Aceptar":
-                
-                Personas contacto= new Usuarios
-                    (   tFUsuario.getText(),
-                        tFContraseña.getText(),
-                        tFNombre.getText(),
-                        tFApellidos.getText(),
-                        tFDireccion.getText(),
-                        tFPoblacion.getText(),
-                        tFProvincia.getText(),
-                        tFNacionalidad.getText(),
-                        tFEMail.getText(),
-                        Integer.parseInt(tFTelefono.getText())
-                    );
-                
-                agenda.crearUsuario((Usuarios)contacto);
-                
+                if (this.idUsuario==null)
+                {
+                    Personas usuario= new Usuarios
+                        (   tFUsuario.getText(),
+                            tFContraseña.getText(),
+                            tFNombre.getText(),
+                            tFApellidos.getText(),
+                            tFDireccion.getText(),
+                            tFPoblacion.getText(),
+                            tFProvincia.getText(),
+                            tFNacionalidad.getText(),
+                            tFEMail.getText(),
+                            Integer.parseInt(tFTelefono.getText())
+                        );
+
+                    agenda.crearUsuario((Usuarios)usuario);
+                }else
+                {
+                    Personas contacto= new Contactos
+                        (   this.idUsuario,
+                            tFNombre.getText(),
+                            tFApellidos.getText(),
+                            tFDireccion.getText(),
+                            tFPoblacion.getText(),
+                            tFProvincia.getText(),
+                            tFNacionalidad.getText(),
+                            tFEMail.getText(),
+                            Integer.parseInt(tFTelefono.getText())
+                        );
+
+                    agenda.crearContacto(contacto, idUsuario);
+                }
                 break;
         }
     }
