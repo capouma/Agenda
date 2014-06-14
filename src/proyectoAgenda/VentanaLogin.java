@@ -143,7 +143,7 @@ public class VentanaLogin extends JFrame implements ActionListener
             // Convertir el password a String 
                 String pass = new String(passArray);
                 
-                String campos[]={"nomusuario"};
+                String campos[]={"id"};
                 String condicional="where `nomusuario`='"+nombre+"' and `claveusuario`='"+pass+"'";
                 ResultSet rs= bd.consulta("select", "usuarios", campos, null, condicional, null);
             try            
@@ -151,11 +151,17 @@ public class VentanaLogin extends JFrame implements ActionListener
                 //control de resultados
                 
                 rs.first();
-                rs.getString("nomusuario");//pregunto si el resultset tiene esta columna
+                String id=rs.getString("id");//pregunto si el resultset tiene esta columna
                                            //en caso de que no la tenga, salta una excepción
                 
+                /*
+                recogida del valor, ID del usuario para poder usar en la ventana de contactos etc...
+                aprobechando que tenemos una consulta hecha, para pasar este valor (id) e ir jugando con
+                el por el programa
+                */
+                
                 opcion = 2;
-                VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+                VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion, id);
                 
             } catch (SQLException ex)
             {
@@ -167,7 +173,7 @@ public class VentanaLogin extends JFrame implements ActionListener
         else if(ev.getSource() == bCrear)
         {
             opcion = 1;
-            VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+            VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion,null);
         }
     }
     /**
