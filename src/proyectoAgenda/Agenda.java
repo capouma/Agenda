@@ -158,25 +158,9 @@ public class Agenda
         //primero obtendremos su id
         String camposSelect[]={"id"};
         
-        //este array es de relleno, sólo se necesita para que no envíe un null y de error
-        //por tanto, su longitud y número de elementos no es importante
-        
-        String cSelect[]=
-            {
-                u.getNombre(),
-                u.getApellidos(),
-                u.getDireccion(),
-                u.getPoblacion(),
-                u.getProvincia(),
-                u.getNacionalidad(),
-                u.getTelefono().toString(),
-                u.getEmail()
-            };
-        
-        
             String condicional=" where `nomUsuario`='"+u.getNomUsuario()+"' and `claveusuario`='"+u.getClaveUsuario()+"'";//condicional FIJO
            
-            ResultSet rs=bd.consulta("select", "usuarios", camposSelect, cSelect, condicional, null);//obtenemos el id del usuario a eliminar
+            ResultSet rs=bd.consulta("select", "usuarios", camposSelect, null, condicional, null);//obtenemos el id del usuario a eliminar
        
        try           
         {
