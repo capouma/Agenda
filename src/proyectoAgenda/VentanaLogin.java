@@ -8,9 +8,14 @@ package proyectoAgenda;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -33,7 +38,7 @@ public class VentanaLogin extends JFrame implements ActionListener
     static JButton bAceptar;
     static JButton bSalir;
     static JButton bCrear;
-    
+    BaseDatos bd= new BaseDatos();
     /*
     * Creamos un constructor con unos valores determinados y que llamara al metodo
     * iniciarComponentes.
@@ -120,8 +125,44 @@ public class VentanaLogin extends JFrame implements ActionListener
         }
         else if(ev.getSource() == bAceptar)
         {
-            opcion = 2;
-            VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+            String nombre=tFUsuario.getText();
+            
+            // Obtener el password 
+                char passArray[] = tFClave.getPassword(); 
+            // Revisar que sean letras y numeros 
+                for (int i = 0; i < passArray.length; i++) 
+                { 
+                    char c = passArray[i];
+                // Si no es letra o numero entonces no es valido 
+                    if (!Character.isLetterOrDigit(c)) 
+                    {
+                        System.out.println("no es caracter válido");  
+                    }
+                } 
+        
+            // Convertir el password a String 
+                String pass = new String(passArray);
+                
+                String campos[]={"nomusuario"};
+                String condicional="where `nomusuario`='"+nombre+"' and `claveusuario`='"+pass+"'";
+                ResultSet rs= bd.consulta("select", "usuarios", campos, null, condicional, null);
+            try            
+            {
+                //control de resultados
+                
+                rs.first();
+                rs.getString("nomusuario");//pregunto si el resultset tiene esta columna
+                                           //en caso de que no la tenga, salta una excepción
+                
+                opcion = 2;
+                VentanaDatos ventanados = new VentanaDatos(ventanaInicial, true, opcion);
+                
+            } catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "La clave/usuario introducido/s no es/son correctos.","Fallo autenticación", JOptionPane.WARNING_MESSAGE);
+            }
+                
+            
         }
         else if(ev.getSource() == bCrear)
         {
