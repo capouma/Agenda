@@ -34,6 +34,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     /*
     * Declaramos los objetos que usaremos de forma comun en esta clase
     */
+    BaseDatos bd= new BaseDatos();
     Container contenedor = getContentPane();
     JPanel pCrearContacto = new JPanel();
     JPanel pModificarContacto = new JPanel();
@@ -44,6 +45,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     JTable tabla;
     String[] cabecera = {"idusuario", "nombre", "apellidos", "direccion", "poblacion", "provincia", "nacionalidad", "telefono", "email"};
     Object[][] datos;//= obtieneDatos();
+    String registro[]=new String[9];//array para los datos
     JButton bAceptar;
     JButton bCancelar;
     
@@ -95,7 +97,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
                 break;
             case 2:
                 this.idUsuario=id;
-                agenda();
+                agenda(id);
                 break;
         }
 
@@ -426,7 +428,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Ventana que se mostrara cuando en ventana login insertemos un usuario y contraseña correcta,
     * en ella veremos una tabla con los contactos del usuario y nos dara opcion a modificar,crear o borrar dichos contactos.
     */
-    public void agenda()
+    public void agenda(String id)
     {
       
         pAgenda.setLayout(null);
@@ -448,8 +450,58 @@ public class VentanaDatos extends  JDialog implements ActionListener
         mMenu.add(mIOpcion2);
         mMenu.add(mIOpcion3);
         
-        modelo = new DefaultTableModel(datos, cabecera);
-        tabla = new JTable(modelo);
+        modelo = new DefaultTableModel(null, cabecera);
+        tabla = new JTable();
+        try
+        {
+            String campos[]={"*"};
+            String condicion="where `idusuario`='"+id+"'";
+            
+            ResultSet rs= bd.consulta("select", "contactos", campos, null,condicion , null);
+            
+            rs.first();
+            
+            //este fragmento de codigo está repetido, no sé porqué no se
+            //sitúa en el primer elemento del RS para hacer el bucle
+            //por lo tanto para 1 registro, hay que hacer esto
+            //si encuentras otra solución, mejor
+            
+                registro[0]=rs.getString("idcontacto");
+                registro[1]=rs.getString("nombre");
+                registro[2]=rs.getString("apellidos");
+                registro[3]=rs.getString("direccion");
+                registro[4]=rs.getString("poblacion");
+                registro[5]=rs.getString("provincia");
+                registro[6]=rs.getString("nacionalidad");
+                registro[7]=rs.getString("telefono");
+                registro[8]=rs.getString("email");
+                
+                modelo.addRow(registro);
+                
+            while(rs.next())
+            {
+                registro[0]=rs.getString("idcontacto");
+                registro[1]=rs.getString("nombre");
+                registro[2]=rs.getString("apellidos");
+                registro[3]=rs.getString("direccion");
+                registro[4]=rs.getString("poblacion");
+                registro[5]=rs.getString("provincia");
+                registro[6]=rs.getString("nacionalidad");
+                registro[7]=rs.getString("telefono");
+                registro[8]=rs.getString("email");
+                
+                modelo.addRow(registro);
+            }
+            
+                
+                
+            tabla.setModel(modelo);
+            
+        }catch(Exception ex)
+        {
+            System.out.println("error"+ex.getMessage());
+        }
+        
         
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 80, 700, 300);
@@ -500,7 +552,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
             case "Buscar": 
                 pModificarContacto.setVisible(false);
                 pCrearContacto.setVisible(false);
-                agenda();
+                agenda(null);
                 break;
             case "Aceptar":
                 if (this.idUsuario==null)
