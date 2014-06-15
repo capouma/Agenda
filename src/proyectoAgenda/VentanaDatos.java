@@ -44,7 +44,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
     DefaultTableModel modelo;
     JTable tabla;
     String[] cabecera = {"idusuario", "nombre", "apellidos", "direccion", "poblacion", "provincia", "nacionalidad", "telefono", "email"};
-    Object[][] datos;//= obtieneDatos();
+    //Object[][] datos;//= obtieneDatos();
     String registro[]=new String[9];//array para los datos
     JButton bAceptar;
     JButton bCancelar;
@@ -193,7 +193,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
         contenedor.add(lEMail);
         
         /*
-        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra en el centro y sera visible.
         */
         setSize(460, 300);
         setResizable(false);
@@ -283,14 +283,14 @@ public class VentanaDatos extends  JDialog implements ActionListener
         add(pCrearContacto);
         
         /*
-        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+        * Definimos el tamaño de la ventana, no se podra redimensionar, saldra en el centro y sera visible.
         */
         Toolkit tk = Toolkit.getDefaultToolkit();
         
         int w=(tk.getScreenSize().width)/8;
         int h=(tk.getScreenSize().height)/4;
         
-        setSize(400,300);
+        setSize(460,300);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -413,7 +413,7 @@ public class VentanaDatos extends  JDialog implements ActionListener
             add(pCrearContacto);
             
             /*
-            * Definimos el tamaño de la ventana, no se podra redimensionar, saldra centrada en el centro y sera visible.
+            * Definimos el tamaño de la ventana, no se podra redimensionar, saldra en el centro y sera visible.
             */
             setSize(460, 300);
             setResizable(false);
@@ -586,7 +586,11 @@ public class VentanaDatos extends  JDialog implements ActionListener
                         );
 
                     agenda.crearContacto(contacto, idUsuario);
+                    pCrearContacto.setVisible(false);
+                    agenda(idUsuario);
                 }
+                
+                
                 break;
         }
     }
