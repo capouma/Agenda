@@ -35,7 +35,8 @@ public class VentanaDatos extends  JDialog implements ActionListener
     * Declaramos los objetos que usaremos de forma comun en esta clase
     */
     BaseDatos bd= new BaseDatos();
-    Container contenedor = getContentPane();
+    //Container contenedor = getContentPane();
+    JPanel pCrearUsuario = new JPanel();
     JPanel pCrearContacto = new JPanel();
     JPanel pModificarContacto = new JPanel();
     JPanel pAgenda = new JPanel();
@@ -108,7 +109,8 @@ public class VentanaDatos extends  JDialog implements ActionListener
     */
     public void vcrearUsuario()
     {
-        contenedor.setLayout(null);
+        //contenedor.setLayout(null);
+        pCrearUsuario.setLayout(null);
         setTitle("Creacion de Usuario");
         
         lNombre = new JLabel("Nombre");
@@ -169,28 +171,29 @@ public class VentanaDatos extends  JDialog implements ActionListener
         bCancelar.setBounds(300, 200, 100, 20);
         bCancelar.addActionListener(this);
     
-        contenedor.add(bAceptar);
-        contenedor.add(bCancelar);
-        contenedor.add(lNombre);
-        contenedor.add(tFNombre);
-        contenedor.add(lApellidos);
-        contenedor.add(tFApellidos);
-        contenedor.add(lUsuario);
-        contenedor.add(tFUsuario);
-        contenedor.add(lContraseña);
-        contenedor.add(tFContraseña);
-        contenedor.add(lDireccion);
-        contenedor.add(tFDireccion);
-        contenedor.add(lPoblacion);
-        contenedor.add(tFPoblacion);
-        contenedor.add(lProvincia);
-        contenedor.add(tFProvincia);
-        contenedor.add(lNacionalidad);
-        contenedor.add(tFNacionalidad);
-        contenedor.add(lTelefono);
-        contenedor.add(tFTelefono);
-        contenedor.add(tFEMail);
-        contenedor.add(lEMail);
+        pCrearUsuario.add(bAceptar);
+        pCrearUsuario.add(bCancelar);
+        pCrearUsuario.add(lNombre);
+        pCrearUsuario.add(tFNombre);
+        pCrearUsuario.add(lApellidos);
+        pCrearUsuario.add(tFApellidos);
+        pCrearUsuario.add(lUsuario);
+        pCrearUsuario.add(tFUsuario);
+        pCrearUsuario.add(lContraseña);
+        pCrearUsuario.add(tFContraseña);
+        pCrearUsuario.add(lDireccion);
+        pCrearUsuario.add(tFDireccion);
+        pCrearUsuario.add(lPoblacion);
+        pCrearUsuario.add(tFPoblacion);
+        pCrearUsuario.add(lProvincia);
+        pCrearUsuario.add(tFProvincia);
+        pCrearUsuario.add(lNacionalidad);
+        pCrearUsuario.add(tFNacionalidad);
+        pCrearUsuario.add(lTelefono);
+        pCrearUsuario.add(tFTelefono);
+        pCrearUsuario.add(tFEMail);
+        pCrearUsuario.add(lEMail);
+        add(pCrearUsuario);
         
         /*
         * Definimos el tamaño de la ventana, no se podra redimensionar, saldra en el centro y sera visible.
@@ -586,10 +589,11 @@ public class VentanaDatos extends  JDialog implements ActionListener
                         );
 
                     agenda.crearContacto(contacto, idUsuario);
-                    pCrearContacto.setVisible(false);
-                    agenda(idUsuario);
+
                 }
-                
+                    pCrearContacto.setVisible(false);
+                    pCrearUsuario.setVisible(false);
+                    agenda(idUsuario);                
                 
                 break;
         }
